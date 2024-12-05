@@ -46,7 +46,7 @@ type Params = {
     courier: string;
 };
 
-export default async function ServerWrapper({ params }: { params: Params }) {
+export default async function ServerWrapper({ params }: { params: Promise<Params> }) {
     const { costId, courier } = await params;
     const formData = new FormData();
     formData.append("origin", costId);

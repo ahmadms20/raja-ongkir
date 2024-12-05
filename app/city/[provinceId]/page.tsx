@@ -29,7 +29,7 @@ type Params = {
     provinceId: string;
 };
 
-export default async function ServerWrapper({ params }: { params: Params }) {
+export default async function ServerWrapper({ params }: { params: Promise<Params> }) {
     const { provinceId } = await params;
     const data: Response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/city?province=${provinceId}`, {
         method: 'GET',

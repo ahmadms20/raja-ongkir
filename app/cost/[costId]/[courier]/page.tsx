@@ -41,7 +41,12 @@ type RajaOngkirResponse = {
     };
 };
 
-export default async function ServerWrapper({ params }: any) {
+type Params = {
+    costId: string;
+    courier: string;
+};
+
+export default async function ServerWrapper({ params }: { params: Params }) {
     const { costId, courier } = await params;
     const formData = new FormData();
     formData.append("origin", costId);

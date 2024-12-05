@@ -25,7 +25,11 @@ type RajaOngkirResponse = {
     };
 };
 
-export default async function ServerWrapper({ params }: any) {
+type Params = {
+    provinceId: string;
+};
+
+export default async function ServerWrapper({ params }: { params: Params }) {
     const { provinceId } = await params;
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/city?province=${provinceId}`, {
         method: 'GET',

@@ -77,7 +77,7 @@ export default function City({ data, courier }: { data: DataCost, courier: strin
                 {data?.results[0]?.costs?.length > 0 ? (
                     <Suspense fallback={<Loading />}>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
-                            {data?.results[0]?.costs?.map((item: any, index: number) => (
+                            {data?.results[0]?.costs?.map((item: Cost, index: number) => (
                                 <Card key={index}>
                                     {item.service}
                                     <div className="flex gap-2 text-sm font-normal">

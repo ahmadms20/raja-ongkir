@@ -6,6 +6,41 @@ export const metadata: Metadata = {
     title: "Biaya | Raja Ongkir"
 };
 
+type CostDetail = {
+    value: number;
+    etd: string;
+    note: string;
+};
+
+type Cost = {
+    service: string;
+    description: string;
+    cost: CostDetail[];
+};
+
+type Results = {
+    code: string;
+    name: string;
+    costs: Cost[];
+};
+
+type OriginDetails = {
+    city_id: string;
+    city_name: string;
+    province_id: string;
+};
+
+type RajaOngkirResponse = {
+    rajaongkir: {
+        status: {
+            code: number;
+            description: string;
+        };
+        results: Results[];
+        origin_details: OriginDetails;
+    };
+};
+
 export default async function ServerWrapper({ params }: any) {
     const { costId, courier } = await params;
     const formData = new FormData();
@@ -20,7 +55,7 @@ export default async function ServerWrapper({ params }: any) {
         } as HeadersInit,
         body: formData,
     });
-    const dataCost = await data.json();
+    const dataCost: RajaOngkirResponse = await data.json();
 
     if(dataCost?.rajaongkir?.status?.code !== 200) return <NotFound />;
 

@@ -6,6 +6,25 @@ export const metadata: Metadata = {
     title: "Kota | Raja Ongkir"
 };
 
+type DataResults = {
+    city_id: string;
+    city_name: string;
+    province_id: string;
+    province: string;
+    type: string;
+    postal_code: string;
+};
+
+type RajaOngkirResponse = {
+    rajaongkir: {
+        status: {
+            code: number;
+            description: string;
+        };
+        results: DataResults[];
+    };
+};
+
 export default async function ServerWrapper({ params }: any) {
     const { provinceId } = await params;
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/city?province=${provinceId}`, {
@@ -14,7 +33,7 @@ export default async function ServerWrapper({ params }: any) {
             key: process.env.NEXT_PUBLIC_API_KEY || "",
         } as HeadersInit,
     });
-    const dataCities = await data.json();
+    const dataCities: RajaOngkirResponse = await data.json();
 
     if(dataCities?.rajaongkir?.status?.code !== 200) return <NotFound />;
 

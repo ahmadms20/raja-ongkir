@@ -1,10 +1,11 @@
 type Data = {
-    children: string
+    children: string;
+    color?: string;
 };
 
-const Title = ({ children }: Data) => {
+const Title = ({ children, color }: Data) => {
     return (
-        <div className="w-full font-bold text-3xl text-center">
+        <div className={`${color} w-full font-bold text-3xl text-center`}>
             {children}
         </div>
     )

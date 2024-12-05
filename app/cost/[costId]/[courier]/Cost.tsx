@@ -9,6 +9,7 @@ import Button from "@/app/_components/Button";
 import { useRouter } from 'next/navigation';
 import { Suspense } from "react";
 import { formatRupiah } from "@/app/_utils/helpers";
+import ProtectedRoute from "@/app/_components/ProtectedRoute";
 
 type CostDetail = {
     value: number;
@@ -50,44 +51,46 @@ export default function City({ data, courier }: { data: DataCost, courier: strin
     ];
 
     return (
-        <div className="w-full py-16 px-4 sm:px-8">
-            <Button onClick={() => router.push(`/city/${data?.origin_details?.province_id}`)}>Kembali</Button>
-            <Title>{data?.origin_details?.city_name === undefined ? "Nama Kota Tidak Ditemukan" : data?.origin_details?.city_name}</Title>
-            <div className="flex justify-center gap-4 space-x-2 mt-4">
-                {dataButtonFilter.map((item, index) => {
-                    let isActive = filterType === item.value;
-                    return (
-                        <Button
-                            key={index}
-                            onClick={() => {
-                                setFilterType(item.value as "jne" | "pos" | "tiki");
-                                router.push(`/cost/${data?.origin_details?.city_id}/${item.value}`);
-                            }}
-                            color={`${isActive ? "text-white" : "text-black hover:text-white"}`}
-                            backgroundColor={`${isActive ? "bg-orange-500" : "bg-white hover:bg-orange-500"}`}
-                            borderColor={`${isActive ? "" : "border-orange-500"}`}
-                        >
-                            {item.text}
-                        </Button>
-                    )
-                })}
+        <ProtectedRoute>
+            <div className="w-full py-10 px-4 sm:px-8">
+                <Button onClick={() => router.push(`/city/${data?.origin_details?.province_id}`)}>Kembali</Button>
+                <Title>{data?.origin_details?.city_name === undefined ? "Nama Kota Tidak Ditemukan" : data?.origin_details?.city_name}</Title>
+                <div className="flex justify-center gap-4 space-x-2 mt-4">
+                    {dataButtonFilter.map((item, index) => {
+                        let isActive = filterType === item.value;
+                        return (
+                            <Button
+                                key={index}
+                                onClick={() => {
+                                    setFilterType(item.value as "jne" | "pos" | "tiki");
+                                    router.push(`/cost/${data?.origin_details?.city_id}/${item.value}`);
+                                }}
+                                color={`${isActive ? "text-white" : "text-black hover:text-white"}`}
+                                backgroundColor={`${isActive ? "bg-orange-500" : "bg-white hover:bg-orange-500"}`}
+                                borderColor={`${isActive ? "" : "border-orange-500"}`}
+                            >
+                                {item.text}
+                            </Button>
+                        )
+                    })}
+                </div>
+                {data?.results[0]?.costs?.length > 0 ? (
+                    <Suspense fallback={<Loading />}>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
+                            {data?.results[0]?.costs?.map((item: any, index: number) => (
+                                <Card key={index}>
+                                    {item.service}
+                                    <div className="flex gap-2 text-sm font-normal">
+                                        {item.description}{" | "}{formatRupiah(Number(item.cost[0].value))}
+                                    </div>
+                                </Card>
+                            ))}
+                        </div>
+                    </Suspense>
+                ) : (
+                    <Empty>Tidak ada data</Empty>
+                )}
             </div>
-            {data?.results[0]?.costs?.length > 0 ? (
-                <Suspense fallback={<Loading />}>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
-                        {data?.results[0]?.costs?.map((item: any, index: number) => (
-                            <Card key={index}>
-                                {item.service}
-                                <div className="flex gap-2 text-sm font-normal">
-                                    {item.description}{" | "}{formatRupiah(Number(item.cost[0].value))}
-                                </div>
-                            </Card>
-                        ))}
-                    </div>
-                </Suspense>
-            ) : (
-                <Empty>Tidak ada data</Empty>
-            )}
-        </div>
+        </ProtectedRoute>
     );
 };

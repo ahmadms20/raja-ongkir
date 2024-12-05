@@ -1,5 +1,10 @@
 import City from './Cost';
 import NotFound from '@/app/not-found';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Biaya | Raja Ongkir"
+};
 
 export default async function ServerWrapper({ params }: any) {
     const { costId, courier } = await params;

@@ -1,5 +1,5 @@
 type Data = {
-    children: string
+    children: string;
 };
 
 const Empty = ({ children }: Data) => {

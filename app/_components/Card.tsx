@@ -1,6 +1,6 @@
 type Data = {
-    children: React.ReactNode,
-    onClick?: () => void
+    children: React.ReactNode;
+    onClick?: () => void;
 };
 
 const Card = ({ children, onClick }: Data) => {

@@ -1,5 +1,10 @@
 import Province from './Province';
 import NotFound from '@/app/not-found';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Provinsi | Raja Ongkir"
+};
 
 export default async function ServerWrapper() {
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/province`, {

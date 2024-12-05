@@ -37,7 +37,7 @@ export default function City({ data }: { data: City[] }) {
                 <Title>{data[0]?.province === undefined ? "Nama Provinsi Tidak Ditemukan" : data[0]?.province}</Title>
                 <div className="flex justify-center gap-4 space-x-2 mt-4">
                     {dataButtonFilter.map((item, index) => {
-                        let isActive = filterType === item.value;
+                        const isActive = filterType === item.value;
                         return (
                             <Button
                                 key={index}

@@ -57,7 +57,7 @@ export default function City({ data, courier }: { data: DataCost, courier: strin
                 <Title>{data?.origin_details?.city_name === undefined ? "Nama Kota Tidak Ditemukan" : data?.origin_details?.city_name}</Title>
                 <div className="flex justify-center gap-4 space-x-2 mt-4">
                     {dataButtonFilter.map((item, index) => {
-                        let isActive = filterType === item.value;
+                        const isActive = filterType === item.value;
                         return (
                             <Button
                                 key={index}

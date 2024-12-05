@@ -40,11 +40,16 @@ type DataCost = {
     origin_details: OriginDetails;
 };
 
+type ButtonFilter = {
+    text: string;
+    value: string;
+};
+
 export default function City({ data, courier }: { data: DataCost, courier: string }) {
     const router = useRouter();
     const [filterType, setFilterType] = useState(courier);
 
-    const dataButtonFilter = [
+    const dataButtonFilter: ButtonFilter[] = [
         { text: "JNE", value: "jne" },
         { text: "POS", value: "pos" },
         { text: "TIKI", value: "tiki" },

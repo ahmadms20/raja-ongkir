@@ -19,12 +19,17 @@ type City = {
     postal_code: string;
 };
 
+type ButtonFilter = {
+    text: string;
+    value: string;
+};
+
 export default function City({ data }: { data: City[] }) {
     const router = useRouter();
     const [filterType, setFilterType] = useState<"Kota" | "Kabupaten" | "">("");
     const filteredData = filterType ? data?.filter((item) => item.type === filterType) : data;
 
-    const dataButtonFilter = [
+    const dataButtonFilter: ButtonFilter[] = [
         { text: "Semua", value: "" },
         { text: "Kota", value: "Kota" },
         { text: "Kabupaten", value: "Kabupaten" },

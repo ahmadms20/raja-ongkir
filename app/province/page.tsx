@@ -22,7 +22,7 @@ type RajaOngkirResponse = {
 };
 
 export default async function ServerWrapper() {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/province`, {
+    const data: Response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/province`, {
         method: 'GET',
         headers: {
             key: process.env.NEXT_PUBLIC_API_KEY || "",

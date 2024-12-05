@@ -53,7 +53,7 @@ export default async function ServerWrapper({ params }: { params: Params }) {
     formData.append("destination", costId);
     formData.append("weight", "1000");
     formData.append("courier", courier);
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cost`, {
+    const data: Response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cost`, {
         method: 'POST',
         headers: {
             key: process.env.NEXT_PUBLIC_API_KEY || "",

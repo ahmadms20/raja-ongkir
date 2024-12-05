@@ -31,7 +31,7 @@ type Params = {
 
 export default async function ServerWrapper({ params }: { params: Params }) {
     const { provinceId } = await params;
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/city?province=${provinceId}`, {
+    const data: Response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/city?province=${provinceId}`, {
         method: 'GET',
         headers: {
             key: process.env.NEXT_PUBLIC_API_KEY || "",

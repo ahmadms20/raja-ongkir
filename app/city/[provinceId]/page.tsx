@@ -1,5 +1,10 @@
 import City from './City';
 import NotFound from '@/app/not-found';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Kota | Raja Ongkir"
+};
 
 export default async function ServerWrapper({ params }: any) {
     const { provinceId } = await params;

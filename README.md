@@ -15,6 +15,6 @@
 
 ## Akun dummy login
 
-- Uername: admin
+- Username: admin
 
 - Password: admin123

@@ -1,4 +1,5 @@
 import City from './City';
+import NotFound from '@/app/not-found';
 
 export default async function ServerWrapper({ params }: any) {
     const { provinceId } = await params;
@@ -9,6 +10,8 @@ export default async function ServerWrapper({ params }: any) {
         } as HeadersInit,
     });
     const dataCities = await data.json();
+
+    if(dataCities?.rajaongkir?.status?.code !== 200) return <NotFound />;
 
     return <City data={dataCities?.rajaongkir?.results} />;
 };

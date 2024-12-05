@@ -31,8 +31,8 @@ export default function City({ data }: { data: City[] }) {
 
     return (
         <div className="w-full py-16 px-4 sm:px-8">
-            <Button onClick={() => router.back()}>Kembali</Button>
-            <Title>{data[0]?.province}</Title>
+            <Button onClick={() => router.push("/province")}>Kembali</Button>
+            <Title>{data[0]?.province === undefined ? "Nama Provinsi Tidak Ditemukan" : data[0]?.province}</Title>
             <div className="flex justify-center gap-4 space-x-2 mt-4">
                 {dataButtonFilter.map((item, index) => {
                     let isActive = filterType === item.value;
@@ -55,7 +55,7 @@ export default function City({ data }: { data: City[] }) {
                         {filteredData?.map((item: City, index: number) => (
                             <Card
                                 key={index}
-                                onClick={() => router.push(`/cost/${item.city_id}`)}
+                                onClick={() => router.push(`/cost/${item.city_id}/jne`)}
                             >
                                 {item.city_name}
                                 <div

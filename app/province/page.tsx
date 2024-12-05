@@ -1,4 +1,5 @@
 import Province from './Province';
+import NotFound from '@/app/not-found';
 
 export default async function ServerWrapper() {
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/province`, {
@@ -8,6 +9,8 @@ export default async function ServerWrapper() {
         } as HeadersInit,
     });
     const dataProvinces = await data.json();
+
+    if(dataProvinces?.rajaongkir?.status?.code !== 200) return <NotFound />;
 
     return <Province data={dataProvinces?.rajaongkir?.results} />;
 };

@@ -1,12 +1,13 @@
 import City from './Cost';
+import NotFound from '@/app/not-found';
 
 export default async function ServerWrapper({ params }: any) {
-    const { costId } = await params;
+    const { costId, courier } = await params;
     const formData = new FormData();
     formData.append("origin", costId);
     formData.append("destination", costId);
     formData.append("weight", "1000");
-    formData.append("courier", "jne");
+    formData.append("courier", courier);
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cost`, {
         method: 'POST',
         headers: {
@@ -16,5 +17,7 @@ export default async function ServerWrapper({ params }: any) {
     });
     const dataCost = await data.json();
 
-    return <City data={dataCost?.rajaongkir} />;
+    if(dataCost?.rajaongkir?.status?.code !== 200) return <NotFound />;
+
+    return <City data={dataCost?.rajaongkir} courier={courier} />;
 };

@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import Card from "@/app/_components/Card";
 import Title from "@/app/_components/Title";
 import Empty from "@/app/_components/Empty";
@@ -28,7 +29,9 @@ type Results = {
 };
 
 type OriginDetails = {
+    city_id: string;
     city_name: string;
+    province_id: string;
 };
 
 type DataCost = {
@@ -36,16 +39,39 @@ type DataCost = {
     origin_details: OriginDetails;
 };
 
-export default function City({ data }: { data: DataCost }) {
+export default function City({ data, courier }: { data: DataCost, courier: string }) {
     const router = useRouter();
+    const [filterType, setFilterType] = useState(courier);
+
+    const dataButtonFilter = [
+        { text: "JNE", value: "jne" },
+        { text: "POS", value: "pos" },
+        { text: "TIKI", value: "tiki" },
+    ];
 
     return (
         <div className="w-full py-16 px-4 sm:px-8">
-            <Button onClick={() => router.back()}>Kembali</Button>
-            <Title>{data?.origin_details?.city_name}</Title>
-            <h1 className="flex justify-center items-center text-lg mt-4">
-                {data?.results[0]?.name}
-            </h1>
+            <Button onClick={() => router.push(`/city/${data?.origin_details?.province_id}`)}>Kembali</Button>
+            <Title>{data?.origin_details?.city_name === undefined ? "Nama Kota Tidak Ditemukan" : data?.origin_details?.city_name}</Title>
+            <div className="flex justify-center gap-4 space-x-2 mt-4">
+                {dataButtonFilter.map((item, index) => {
+                    let isActive = filterType === item.value;
+                    return (
+                        <Button
+                            key={index}
+                            onClick={() => {
+                                setFilterType(item.value as "jne" | "pos" | "tiki");
+                                router.push(`/cost/${data?.origin_details?.city_id}/${item.value}`);
+                            }}
+                            color={`${isActive ? "text-white" : "text-black hover:text-white"}`}
+                            backgroundColor={`${isActive ? "bg-orange-500" : "bg-white hover:bg-orange-500"}`}
+                            borderColor={`${isActive ? "" : "border-orange-500"}`}
+                        >
+                            {item.text}
+                        </Button>
+                    )
+                })}
+            </div>
             {data?.results[0]?.costs?.length > 0 ? (
                 <Suspense fallback={<Loading />}>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
